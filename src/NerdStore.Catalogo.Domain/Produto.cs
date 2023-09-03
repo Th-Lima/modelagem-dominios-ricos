@@ -69,7 +69,7 @@ public class Produto : Entity, IAggregateRoot
 
     public void AlterarDescricao(string descricao)
     {
-        AssertionConcern.ValidarSeVazio(descricao, $"O Campo {nameof(Descricao)} do produto não pode estar vazio");
+        AssertionConcern.ValidarSeVazio(descricao, $"O Campo Descrição do produto não pode estar vazio");
         Descricao = descricao;
     }
 
@@ -90,10 +90,10 @@ public class Produto : Entity, IAggregateRoot
     
     public void Validar()
     {
-        AssertionConcern.ValidarSeVazio(Nome, $"O Campo {nameof(Nome)} do produto não pode estar Vazio");
-        AssertionConcern.ValidarSeVazio(Descricao, $"O Campo {nameof(Descricao)} do produto não pode estar Vazio");
-        AssertionConcern.ValidarSeDiferente(CategoriaId, Guid.Empty, $"O Campo {nameof(CategoriaId)} do produto não pode estar Vazio");
-        AssertionConcern.ValidarSeMenorIgualAMinimo(Valor, 0, $"O Campo {nameof(Valor)} do produto não pode ser menor igual a 0");
-        AssertionConcern.ValidarSeVazio(Imagem, $"O Campo {nameof(Imagem)} do produto não pode estar Vazio");
+        AssertionConcern.ValidarSeVazio(Nome, $"O Campo Nome do produto não pode estar Vazio");
+        AssertionConcern.ValidarSeVazio(Descricao, $"O Campo Descrição do produto não pode estar Vazio");
+        AssertionConcern.ValidarSeIgual(CategoriaId, Guid.Empty, $"O Campo CategoriaId do produto não pode estar Vazio");
+        AssertionConcern.ValidarSeMenorQue(Valor, 1, $"O Campo Valor do produto não pode ser menor igual a 0");
+        AssertionConcern.ValidarSeVazio(Imagem, $"O Campo Imagem do produto não pode estar Vazio");
     }
 }

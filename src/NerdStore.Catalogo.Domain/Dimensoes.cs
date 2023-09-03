@@ -12,9 +12,9 @@ public class Dimensoes
 
     public Dimensoes(decimal altura, decimal largura, decimal profundidade)
     {
-        AssertionConcern.ValidarSeMenorIgualAMinimo(altura, 1, $"O campo {nameof(Altura)} não pode ser menor ou igual a 1");
-        AssertionConcern.ValidarSeMenorIgualAMinimo(largura, 1, $"O campo {nameof(Largura)} não pode ser menor ou igual a 1");
-        AssertionConcern.ValidarSeMenorIgualAMinimo(profundidade, 1, $"O campo {nameof(Profundidade)} não pode ser menor ou igual a 1");
+        AssertionConcern.ValidarSeMenorQue(altura, 1, $"O campo Altura não pode ser menor ou igual a 0");
+        AssertionConcern.ValidarSeMenorQue(largura, 1, $"O campo Largura não pode ser menor ou igual a 0");
+        AssertionConcern.ValidarSeMenorQue(profundidade, 1, $"O campo Profunidade não pode ser menor ou igual a 0");
         
         Altura = altura;
         Largura = largura;
