@@ -19,6 +19,8 @@ public class Produto : Entity, IAggregateRoot
     public string Imagem { get; private set; }
     
     public int QuantidadeEstoque { get; private set; }
+
+    public Dimensoes Dimensoes { get; private set; }
     
     //EF Core
     public Categoria Categoria { get; private set; }
@@ -37,13 +39,15 @@ public class Produto : Entity, IAggregateRoot
         decimal valor,
         DateTime dataCadastro,
         string imagem,
-        Guid categoriaId)
+        Guid categoriaId, 
+        Dimensoes dimensoes)
     {
         Nome = nome;
         Descricao = descricao;
         Ativo = ativo;
         Valor = valor;
         CategoriaId = categoriaId;
+        Dimensoes = dimensoes;
         DataCadastro = dataCadastro;
         Imagem = imagem;
         
