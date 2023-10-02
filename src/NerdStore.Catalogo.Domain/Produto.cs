@@ -30,7 +30,7 @@ public class Produto : Entity, IAggregateRoot
     
     #endregion
     
-    #region Constructor
+    #region Constructors
     
     public Produto(
         string nome,
@@ -52,6 +52,11 @@ public class Produto : Entity, IAggregateRoot
         Imagem = imagem;
         
         Validar();
+    }
+
+    protected Produto()
+    {
+        
     }
     
     #endregion

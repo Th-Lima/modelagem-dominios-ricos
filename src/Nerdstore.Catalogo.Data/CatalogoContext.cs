@@ -14,6 +14,10 @@ public class CatalogoContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Produto>()
+            .Property(p => p.Valor)
+            .HasColumnType("decimal(18,4)");
+        
         var modelBuilderProperties = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(x => x.GetProperties().Where(x => x.ClrType == typeof(string)));
