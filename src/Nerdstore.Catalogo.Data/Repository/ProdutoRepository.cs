@@ -22,7 +22,7 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<Produto> ObterPorId(Guid id)
     {
-        return await _catalogoContext.Produtos.FindAsync(id);
+        return await _catalogoContext.Produtos.FindAsync(id.ToString("D"));
     }
 
     public async Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
