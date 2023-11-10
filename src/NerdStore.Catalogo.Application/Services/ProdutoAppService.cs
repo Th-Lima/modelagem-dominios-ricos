@@ -59,7 +59,7 @@ public class ProdutoAppService : IProdutoAppService
         if (!_estoqueService.DebitarEstoque(id, quantidade).Result)
             throw new DomainException("Falha ao debitar estoque");
 
-        return _mapper.Map<ProdutoDto>(_produtoRepository.ObterPorId(id));
+        return _mapper.Map<ProdutoDto>(await _produtoRepository.ObterPorId(id));
     }
 
     public async Task<ProdutoDto> ReporEstoque(Guid id, int quantidade)
@@ -67,7 +67,7 @@ public class ProdutoAppService : IProdutoAppService
         if (!_estoqueService.ReporEstoque(id, quantidade).Result)
             throw new DomainException("Falha ao repor estoque");
 
-        return _mapper.Map<ProdutoDto>(_produtoRepository.ObterPorId(id));
+        return _mapper.Map<ProdutoDto>(await _produtoRepository.ObterPorId(id));
     }
 
     public void Dispose()

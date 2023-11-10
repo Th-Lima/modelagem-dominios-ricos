@@ -31,7 +31,7 @@ public class AdminProdutosController : Controller
     [HttpPost]
     public async Task<IActionResult> NovoProduto(ProdutoDto produtoDto)
     {
-        //ModelState.Remove("Categorias");
+        ModelState.Remove("Categorias");
         if (!ModelState.IsValid) 
             return View(await PopularCategorias(produtoDto));
 
