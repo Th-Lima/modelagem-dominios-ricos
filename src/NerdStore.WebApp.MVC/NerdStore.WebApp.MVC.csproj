@@ -26,5 +26,9 @@
       <ProjectReference Include="..\Nerdstore.Catalogo.Data\Nerdstore.Catalogo.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Images\camisacsharp.jpg" />
+    </ItemGroup>
+
 
 </Project>

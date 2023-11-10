@@ -22,7 +22,8 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<Produto> ObterPorId(Guid id)
     {
-        return await _catalogoContext.Produtos.FindAsync(id.ToString("D"));
+        var produtos = await ObterTodos();
+        return produtos.FirstOrDefault(x => x.Id == id);
     }
 
     public async Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
