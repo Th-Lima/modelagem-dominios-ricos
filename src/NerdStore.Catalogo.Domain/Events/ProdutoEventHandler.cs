@@ -15,6 +15,6 @@ public class ProdutoEventHandler : INotificationHandler<ProdutoAbaixoEstoqueEven
     {
         var produto = await  _produtoRepository.ObterPorId(mensagem.AggregateId);
         
-        // Enviar Email para aquisição de mais produtos.
+        // TODO - Enviar Email para aquisição de mais produtos.
     }
 }

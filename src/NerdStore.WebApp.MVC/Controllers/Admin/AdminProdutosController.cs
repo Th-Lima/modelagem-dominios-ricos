@@ -55,7 +55,7 @@ public class AdminProdutosController : Controller
         produtoDto.QuantidadeEstoque = produto.QuantidadeEstoque;
 
         ModelState.Remove("QuantidadeEstoque");
-        //ModelState.Remove("Categorias");
+        ModelState.Remove("Categorias");
         if (!ModelState.IsValid) return View(await PopularCategorias(produtoDto));
 
         await _produtoAppService.AtualizarProduto(produtoDto);
