@@ -24,7 +24,7 @@ public class EstoqueService : IEstoqueService
         produto.DebitarEstoque(quantidade);
         
         // TODO: Parametrizar a quantidade de estoque baixo
-        //Publicando Evento, sem criar dependência com a classe que vai tratar o evento
+        //Publicando Evento de domínio, sem criar dependência com a classe que vai tratar o evento
         if (produto.QuantidadeEstoque < 10)
             await _bus.PublicarEvento(new ProdutoAbaixoEstoqueEvent(produto.Id, produto.QuantidadeEstoque));
         
