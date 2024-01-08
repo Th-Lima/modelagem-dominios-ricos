@@ -6,6 +6,8 @@ using NerdStore.Catalogo.Domain;
 using NerdStore.Catalogo.Domain.Events;
 using NerdStore.Core.BusMemory;
 using NerdStore.Vendas.Application.Commands;
+using NerdStore.Vendas.Data;
+using NerdStore.Vendas.Domain;
 
 namespace NerdStore.WebApp.MVC.Setup;
 
@@ -15,7 +17,7 @@ public static class DependencyInjectionExtension
     {
         #region MediatR
         
-        services.AddScoped<IMediatrHandler, MediatrHandler>();
+        services.AddScoped<IMediatorHandler, MediatorHandler>();
         
         #endregion
 
@@ -27,6 +29,14 @@ public static class DependencyInjectionExtension
         services.AddScoped<CatalogoContext>();
 
         #endregion
+        
+        #region Vendas Context
+
+        services.AddScoped<IPedidoRepository, PedidoRepository>();
+        // services.AddScoped<IPedidoQueries, PedidoQueries>();
+        services.AddScoped<VendasContext>();
+
+        #endregion
 
         #region MediatR Bus - Events
 
@@ -34,12 +44,12 @@ public static class DependencyInjectionExtension
 
         #endregion
 
-        #region Vendas - Command & CommandHandler
+        #region Commands & CommandHandler
 
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
         
         #endregion
-        
+
         return services;
     }
 }

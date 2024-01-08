@@ -5,6 +5,7 @@ using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.WebApp.MVC.Data;
 using MediatR;
 using Nerdstore.Catalogo.Data;
+using NerdStore.Vendas.Data;
 using NerdStore.WebApp.MVC.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,8 +25,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 #region DbContext Catalogo
 
-builder.Services.AddDbContext<CatalogoContext>(options =>
-    options.UseSqlite(connectionString));
+builder.Services
+    .AddDbContext<CatalogoContext>(options => options.UseSqlite(connectionString));
+
+builder.Services
+    .AddDbContext<VendasContext>(options => options.UseSqlite(connectionString));
 
 #endregion
 
