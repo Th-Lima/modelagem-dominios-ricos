@@ -1,5 +1,5 @@
 using NerdStore.Catalogo.Domain.Events;
-using NerdStore.Core.BusMemory;
+using NerdStore.Core.Communication.Mediator;
 
 namespace NerdStore.Catalogo.Domain;
 

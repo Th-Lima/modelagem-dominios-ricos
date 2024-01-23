@@ -4,7 +4,8 @@ using Nerdstore.Catalogo.Data;
 using Nerdstore.Catalogo.Data.Repository;
 using NerdStore.Catalogo.Domain;
 using NerdStore.Catalogo.Domain.Events;
-using NerdStore.Core.BusMemory;
+using NerdStore.Core.Communication.Mediator;
+using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Vendas.Application.Commands;
 using NerdStore.Vendas.Data;
 using NerdStore.Vendas.Domain;
@@ -15,41 +16,53 @@ public static class DependencyInjectionExtension
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
-        #region MediatR
+        RegisterMediatr(services);
         
+        RegisterServicesCatalogoContext(services);
+        
+        RegisterServicesVendasContext(services);
+        
+        RegisterServicesDomainEvents(services);
+
+        RegisterCommandsAndCommandHandlers(services);
+
+        RegisterNotificationAndNotificationHandlers(services);
+
+        return services;
+    }
+
+    private static void RegisterMediatr(IServiceCollection services)
+    {
         services.AddScoped<IMediatorHandler, MediatorHandler>();
-        
-        #endregion
+    }
 
-        #region Catalogo Context
-
+    private static void RegisterServicesCatalogoContext(IServiceCollection services)
+    {
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
         services.AddScoped<IProdutoAppService, ProdutoAppService>();
         services.AddScoped<IEstoqueService, EstoqueService>();
         services.AddScoped<CatalogoContext>();
+    }
 
-        #endregion
-        
-        #region Vendas Context
-
+    private static void RegisterServicesVendasContext(IServiceCollection services)
+    {
         services.AddScoped<IPedidoRepository, PedidoRepository>();
         // services.AddScoped<IPedidoQueries, PedidoQueries>();
         services.AddScoped<VendasContext>();
+    }
 
-        #endregion
-
-        #region MediatR Bus - Events
-
+    private static void RegisterServicesDomainEvents(IServiceCollection services)
+    {
         services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
+    }
 
-        #endregion
-
-        #region Commands & CommandHandler
-
+    private static void RegisterCommandsAndCommandHandlers(IServiceCollection services)
+    {
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
-        
-        #endregion
+    }
 
-        return services;
+    private static void RegisterNotificationAndNotificationHandlers(IServiceCollection services)
+    {
+        services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
     }
 }
