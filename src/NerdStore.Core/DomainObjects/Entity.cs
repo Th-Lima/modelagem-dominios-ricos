@@ -1,4 +1,5 @@
 using System.Reflection.Metadata;
+using NerdStore.Core.Messages;
 
 namespace NerdStore.Core.DomainObjects;
 
@@ -6,11 +7,30 @@ public abstract class Entity
 {
     public Guid Id { get; set; }
 
+    private List<Event> _eventNotificacoes;
+    public IReadOnlyCollection<Event> EventNotificacoes => _eventNotificacoes?.AsReadOnly();
+    
     protected Entity()
     {
         Id = Guid.NewGuid();
     }
 
+    public void AdicionarEvento(Event evento)
+    {
+        _eventNotificacoes = _eventNotificacoes ?? new List<Event>();
+        _eventNotificacoes.Add(evento);
+    }
+
+    public void RemoverEvento(Event eventItem)
+    {
+        _eventNotificacoes?.Remove(eventItem);
+    }
+
+    public void LimparEventos()
+    {
+        _eventNotificacoes?.Clear();
+    }
+    
     public override bool Equals(object? obj)
     {
         var compareTo = obj as Entity;

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NerdStore.Core.Communication.Mediator;
 using NerdStore.Core.Data;
 using NerdStore.Core.Messages;
 using NerdStore.Vendas.Domain;
@@ -7,7 +8,12 @@ namespace NerdStore.Vendas.Data;
 
 public class VendasContext : DbContext, IUnitOfWork
 {
-    public VendasContext(DbContextOptions<VendasContext> options) : base(options) { }
+    private readonly IMediatorHandler _mediatorHandler;
+
+    public VendasContext(DbContextOptions<VendasContext> options, IMediatorHandler mediatorHandler) : base(options)
+    {
+        _mediatorHandler = mediatorHandler;
+    }
 
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<PedidoItem> PedidoItems { get; set; }
@@ -30,8 +36,9 @@ public class VendasContext : DbContext, IUnitOfWork
         
         var sucesso = await base.SaveChangesAsync() > 0;
             
-        /// O this abaixo é o VendasContext
-        //if(sucesso) await _mediatorHandler.PublicarEventos(this);
+        // O this abaixo é o VendasContext
+        if(sucesso) 
+            await _mediatorHandler.PublicarEventosAsync(this);
 
         return sucesso;
     }
@@ -76,7 +83,7 @@ public class VendasContext : DbContext, IUnitOfWork
             property.SetColumnType("varchar(100)");
 
         // Ignore é para ignorar o Event pois ele não deve ser persistido na base
-        //modelBuilder.Ignore<Event>();
+        modelBuilder.Ignore<Event>();
 
         // Vai buscar todas as entidades e seus mappings via "reflection" apenas um vez
         // e irá configrar para que siga as configurações feitas nos mappings

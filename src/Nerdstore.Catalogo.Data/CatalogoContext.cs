@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Domain;
 using NerdStore.Core.Data;
+using NerdStore.Core.Messages;
 
 namespace Nerdstore.Catalogo.Data;
 
@@ -24,6 +25,9 @@ public class CatalogoContext : DbContext, IUnitOfWork
 
         foreach (var property in modelBuilderProperties) 
             property.SetColumnType("varchar(100)");
+
+        // Ignore é para ignorar o Event pois ele não deve ser persistido na base
+        modelBuilder.Ignore<Event>();
         
         //Busca os mappings via reflection e configura para que seja seguida as configurações das entidades
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogoContext).Assembly);

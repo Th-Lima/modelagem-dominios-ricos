@@ -86,7 +86,8 @@ public class Pedido : Entity, IAggregateRoot
 
     public void AdicionarItem(PedidoItem item)
     {
-        if (!item.EhValido()) return;
+        if (!item.EhValido()) 
+            return;
 
         item.AssociarPedido(Id);
 
