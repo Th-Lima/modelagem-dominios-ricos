@@ -11,7 +11,7 @@ public class Pedido : Entity, IAggregateRoot
     public decimal Desconto { get; private set; }
     public decimal ValorTotal { get; private set; }
     public DateTime DataCadastro { get; private set; }
-    public PedidoStatusEnum PedidoStatus { get; private set; }
+    public PedidoStatus PedidoStatus { get; private set; }
 
     private readonly List<PedidoItem> _pedidoItems;
     public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
@@ -151,22 +151,22 @@ public class Pedido : Entity, IAggregateRoot
 
     public void TornarRascunho()
     {
-        PedidoStatus = PedidoStatusEnum.Rascunho;
+        PedidoStatus = PedidoStatus.Rascunho;
     }
 
     public void IniciarPedido()
     {
-        PedidoStatus = PedidoStatusEnum.Iniciado;
+        PedidoStatus = PedidoStatus.Iniciado;
     }
 
     public void FinalizarPedido()
     {
-        PedidoStatus = PedidoStatusEnum.Pago;
+        PedidoStatus = PedidoStatus.Pago;
     }
 
     public void CancelarPedido()
     {
-        PedidoStatus = PedidoStatusEnum.Cancelado;
+        PedidoStatus = PedidoStatus.Cancelado;
     }
 
     public static class PedidoFactory

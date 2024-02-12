@@ -1,6 +1,6 @@
 namespace NerdStore.Vendas.Domain;
 
-public enum PedidoStatusEnum
+public enum PedidoStatus
 {
     Rascunho = 0,
     Iniciado = 1,

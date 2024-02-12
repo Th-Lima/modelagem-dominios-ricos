@@ -8,6 +8,7 @@ using NerdStore.Core.Communication.Mediator;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Vendas.Application.Commands;
 using NerdStore.Vendas.Application.Events;
+using NerdStore.Vendas.Application.Queries;
 using NerdStore.Vendas.Data;
 using NerdStore.Vendas.Domain;
 
@@ -34,6 +35,7 @@ public static class DependencyInjectionExtension
         //Vendas
         services.AddScoped<VendasContext>();
         services.AddScoped<IPedidoRepository, PedidoRepository>();
+        services.AddScoped<IPedidoQueries, PedidoQueries>();
         
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
         
