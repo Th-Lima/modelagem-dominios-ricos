@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using MediatR;
+using NerdStore.Core.Communication.Mediator;
 using NerdStore.Core.Messages.CommonMessages.IntegrationEvents;
+using NerdStore.Vendas.Application.Commands;
 
 namespace NerdStore.Vendas.Application.Events;
 
@@ -8,8 +10,19 @@ public class PedidoEventHandler :
     INotificationHandler<PedidoRascunhoIniciadoEvent>,
     INotificationHandler<PedidoAtualizadoEvent>,
     INotificationHandler<PedidoItemAdicionadoEvent>,
-    INotificationHandler<PedidoEstoqueRejeitadoEvent>
+    INotificationHandler<PedidoEstoqueRejeitadoEvent>,
+    INotificationHandler<PagamentoRealizadoEvent>,
+    INotificationHandler<PagamentoRecusadoEvent>,
+    INotificationHandler<PedidoFinalizadoEvent>
+    
 {
+    private IMediatorHandler _mediator;
+
+    public PedidoEventHandler(IMediatorHandler mediator)
+    {
+        _mediator = mediator;
+    }
+
     public Task Handle(PedidoRascunhoIniciadoEvent notification, CancellationToken cancellationToken)
     {
         //Implementar lógica para este evento
@@ -30,9 +43,24 @@ public class PedidoEventHandler :
         return Task.CompletedTask;
     }
 
-    public Task Handle(PedidoEstoqueRejeitadoEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(PedidoEstoqueRejeitadoEvent message, CancellationToken cancellationToken)
     {
-        //Cancelar o processamento do pedido- retornar erro para o cliente
+        await _mediator.EnviarComando(new CancelarProcessamentoPedidoCommand(message.PedidoId, message.ClienteId));
+    }
+
+    public async Task Handle(PagamentoRealizadoEvent message, CancellationToken cancellationToken)
+    {
+        await _mediator.EnviarComando(new FinalizarPedidoCommand(message.PedidoId, message.ClienteId));
+    }
+
+    public async Task Handle(PagamentoRecusadoEvent message, CancellationToken cancellationToken)
+    {
+        await _mediator.EnviarComando(new CancelarProcessamentoPedidoEstornarEstoqueCommand(message.PedidoId, message.ClienteId));
+    }
+
+    public Task Handle(PedidoFinalizadoEvent notification, CancellationToken cancellationToken)
+    {
+        //Envia email de confirmação do pedido para usuário
         return Task.CompletedTask;
     }
 }
