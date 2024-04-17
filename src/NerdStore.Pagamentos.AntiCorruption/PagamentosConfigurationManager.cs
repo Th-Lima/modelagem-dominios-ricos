@@ -1,6 +1,6 @@
 namespace NerdStore.Pagamentos.AntiCorruption;
 
-public class PagamentosConfigurationManager : IConfigurationManager
+public class PagamentosConfigurationManager : IPagamentosConfigurationManager
 {
     public string GetValue(string node)
     {

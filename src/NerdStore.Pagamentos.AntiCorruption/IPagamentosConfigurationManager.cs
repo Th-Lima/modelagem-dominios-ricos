@@ -1,6 +1,6 @@
 namespace NerdStore.Pagamentos.AntiCorruption;
 
-public interface IConfigurationManager
+public interface IPagamentosConfigurationManager
 {
     string GetValue(string node);
 }

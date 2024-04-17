@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.IdentityModel.Protocols;
 using NerdStore.Catalogo.Application.Services;
 using Nerdstore.Catalogo.Data;
 using Nerdstore.Catalogo.Data.Repository;
@@ -18,7 +17,7 @@ using NerdStore.Vendas.Application.Events;
 using NerdStore.Vendas.Application.Queries;
 using NerdStore.Vendas.Data;
 using NerdStore.Vendas.Domain;
-using ConfigurationManager = Microsoft.Extensions.Configuration.ConfigurationManager;
+using EventSourcing;
 
 namespace NerdStore.WebApp.MVC.Setup;
 
@@ -33,7 +32,7 @@ public static class DependencyInjectionExtension
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             // Event Sourcing - Instancia ficará válida para toda a aplicação, enquanto ela estiver no ar
-            //services.AddSingleton<IEventStoreService, EventStoreService>();
+            services.AddSingleton<IEventStoreService, EventStoreService>();
             //services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
             // Catalogo
@@ -72,7 +71,7 @@ public static class DependencyInjectionExtension
             services.AddScoped<IPagamentoService, PagamentoService>();
             services.AddScoped<IPagamentoCartaoCreditoFacade, PagamentoCartaoCreditoFacade>();
             services.AddScoped<IPayPalGateway, PayPalGateway>();
-            services.AddScoped<IConfigurationManager, PagamentosConfigurationManager>();
+            services.AddScoped<IPagamentosConfigurationManager, PagamentosConfigurationManager>();
             services.AddScoped<PagamentoContext>();
 
             /// Events
