@@ -18,6 +18,7 @@ using NerdStore.Vendas.Application.Queries;
 using NerdStore.Vendas.Data;
 using NerdStore.Vendas.Domain;
 using EventSourcing;
+using NerdStore.Core.Data.EventSourcing;
 
 namespace NerdStore.WebApp.MVC.Setup;
 
@@ -33,7 +34,7 @@ public static class DependencyInjectionExtension
 
             // Event Sourcing - Instancia ficará válida para toda a aplicação, enquanto ela estiver no ar
             services.AddSingleton<IEventStoreService, EventStoreService>();
-            //services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
+            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
             // Catalogo
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
@@ -74,7 +75,7 @@ public static class DependencyInjectionExtension
             services.AddScoped<IPagamentosConfigurationManager, PagamentosConfigurationManager>();
             services.AddScoped<PagamentoContext>();
 
-            /// Events
+            // Events
             services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
     }
 }
